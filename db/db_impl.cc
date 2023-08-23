@@ -263,7 +263,7 @@ DBImpl::DBImpl(const Options& raw_options, const std::string& dbname)
 //          l.unlock();
 //        }
 //      main_comm_threads.back().detach();
-    printf("DBImpl finished\n");
+    //printf("DBImpl finished\n");
 }
 //This functon does not contain the creation of the client message handling thread
 DBImpl::DBImpl(const Options& raw_options, const std::string& dbname,

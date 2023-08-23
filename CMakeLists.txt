@@ -123,7 +123,8 @@ endif(BUILD_SHARED_LIBS)
 # Must be included before CMAKE_INSTALL_INCLUDEDIR is used.
 include(GNUInstallDirs)
 
-add_library(dLSM          )
+add_library(dLSM
+        include/dLSM/generator.h)
 target_sources(dLSM
   PRIVATE
     "${PROJECT_BINARY_DIR}/${dLSM_PORT_CONFIG_DIR}/port_config.h"

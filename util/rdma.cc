@@ -741,15 +741,15 @@ void RDMA_Manager::ConnectQPThroughSocket(std::string qp_type, int socket_fd,
     if (!qp) {
       fprintf(stderr, "failed to create QP\n");
     }
-    fprintf(stdout, "QP was created, QP number=0x%x\n", qp->qp_num);
+    //fprintf(stdout, "QP was created, QP number=0x%x\n", qp->qp_num);
 //  Used to be "ibv_qp* qp = create_qp(shard_target_node_id, true, qp_type);", but the
     // shard_target_node_id is not available so we unwrap the function
   local_con_data.qp_num = htonl(qp->qp_num);
   local_con_data.lid = htons(res->port_attr.lid);
   memcpy(local_con_data.gid, &res->my_gid, 16);
-  printf("checkpoint2");
+  //printf("checkpoint2");
 
-  fprintf(stdout, "\nLocal LID = 0x%x\n", res->port_attr.lid);
+  //fprintf(stdout, "\nLocal LID = 0x%x\n", res->port_attr.lid);
 
   if (sock_sync_data(socket_fd, sizeof(struct registered_qp_config),
       (char*)&local_con_data, (char*)&tmp_con_data) < 0) {
@@ -758,8 +758,8 @@ void RDMA_Manager::ConnectQPThroughSocket(std::string qp_type, int socket_fd,
   remote_con_data->qp_num = ntohl(tmp_con_data.qp_num);
   remote_con_data->lid = ntohs(tmp_con_data.lid);
   memcpy(remote_con_data->gid, tmp_con_data.gid, 16);
-  fprintf(stdout, "Remote QP number = 0x%x\n", remote_con_data->qp_num);
-  fprintf(stdout, "Remote LID = 0x%x\n", remote_con_data->lid);
+  //fprintf(stdout, "Remote QP number = 0x%x\n", remote_con_data->qp_num);
+  //fprintf(stdout, "Remote LID = 0x%x\n", remote_con_data->lid);
   remote_con_data->node_id = tmp_con_data.node_id;
   target_node_id = tmp_con_data.node_id;
   std::unique_lock<std::shared_mutex> l(qp_cq_map_mutex);
@@ -807,10 +807,10 @@ bool RDMA_Manager::Local_Memory_Register(char** p2buffpointer,
     //  auto stop = std::chrono::high_resolution_clock::now();
     //  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start); std::printf("Memory registeration size: %zu time elapse (%ld) us\n", size, duration.count());
     local_mem_pool.push_back(*p2mrpointer);
-    fprintf(stdout,
-            "New MR was registered with addr=%p, lkey=0x%x, rkey=0x%x, flags=0x%x, size=%lu, total registered size is %lu\n",
-            (*p2mrpointer)->addr, (*p2mrpointer)->lkey, (*p2mrpointer)->rkey,
-            mr_flags, size, total_registered_size);
+//    fprintf(stdout,
+//            "New MR was registered with addr=%p, lkey=0x%x, rkey=0x%x, flags=0x%x, size=%lu, total registered size is %lu\n",
+//            (*p2mrpointer)->addr, (*p2mrpointer)->lkey, (*p2mrpointer)->rkey,
+//            mr_flags, size, total_registered_size);
   }else{
     *p2mrpointer = pre_allocated_pool.back();
     pre_allocated_pool.pop_back();
@@ -1225,7 +1225,7 @@ bool RDMA_Manager::Get_Remote_qp_Info_Then_Connect(uint8_t target_node_id) {
   local_con_data.lid = htons(res->port_attr.lid);
   memcpy(local_con_data.gid, &my_gid, 16);
   local_con_data.node_id = node_id;
-  fprintf(stdout, "\nLocal LID = 0x%x\n", res->port_attr.lid);
+  //fprintf(stdout, "\nLocal LID = 0x%x\n", res->port_attr.lid);
   if (sock_sync_data(res->sock_map[target_node_id], sizeof(struct registered_qp_config),
                      (char*)&local_con_data, (char*)&tmp_con_data) < 0) {
     fprintf(stderr, "failed to exchange connection data between sides\n");
@@ -1235,8 +1235,8 @@ bool RDMA_Manager::Get_Remote_qp_Info_Then_Connect(uint8_t target_node_id) {
   remote_con_data->lid = ntohs(tmp_con_data.lid);
   memcpy(remote_con_data->gid, tmp_con_data.gid, 16);
 
-  fprintf(stdout, "Remote QP number = 0x%x\n", remote_con_data->qp_num);
-  fprintf(stdout, "Remote LID = 0x%x\n", remote_con_data->lid);
+  //fprintf(stdout, "Remote QP number = 0x%x\n", remote_con_data->qp_num);
+  //fprintf(stdout, "Remote LID = 0x%x\n", remote_con_data->lid);
   std::unique_lock<std::shared_mutex> l(qp_cq_map_mutex);
   if (qp_type == "read_local" ){
     assert(local_read_qp_info.at(target_node_id) != nullptr);
@@ -1268,7 +1268,7 @@ bool RDMA_Manager::Get_Remote_qp_Info_Then_Connect(uint8_t target_node_id) {
     fprintf(stderr, "sync error after QPs are were moved to RTS\n");
     rc = 1;
     }
-    printf("Finish the connection with node %d\n", target_node_id);
+    //printf("Finish the connection with node %d\n", target_node_id);
   // sync the communication by rdma.
 
   //  post_send<int>(res->mr_send, std::string("main"));
@@ -1387,7 +1387,7 @@ ibv_qp* RDMA_Manager::create_qp_Mside(bool seperated_cq,
   }
 
     qp_map_Mside[qp_id] = qp;
-  fprintf(stdout, "QP was created, QP number=0x%x\n", qp->qp_num);
+  //fprintf(stdout, "QP was created, QP number=0x%x\n", qp->qp_num);
   //  uint8_t* p = qp->gid;
   //  fprintf(stdout,
   //          "Remote GID =%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\n ",
@@ -1472,7 +1472,7 @@ ibv_qp* RDMA_Manager::create_qp(uint8_t target_node_id, bool seperated_cq,
 //    qp_local_write_compact->Reset(qp);
   else
     res->qp_map[target_node_id] = qp;
-  fprintf(stdout, "QP was created, QP number=0x%x\n", qp->qp_num);
+  //fprintf(stdout, "QP was created, QP number=0x%x\n", qp->qp_num);
 //  uint8_t* p = qp->gid;
 //  fprintf(stdout,
 //          "Remote GID =%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\n ",
@@ -1505,10 +1505,10 @@ int RDMA_Manager::connect_qp_Mside(ibv_qp* qp, std::string& q_id) {
   l.unlock();
   if (rdma_config.gid_idx >= 0) {
     uint8_t* p = remote_con_data->gid;
-    fprintf(stdout,
-            "Remote GID =%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\n ",
-            p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9], p[10],
-            p[11], p[12], p[13], p[14], p[15]);
+//    fprintf(stdout,
+//            "Remote GID =%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\n ",
+//            p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9], p[10],
+//            p[11], p[12], p[13], p[14], p[15]);
   }
   /* modify the QP to init */
   rc = modify_qp_to_init(qp);
@@ -1532,7 +1532,7 @@ int RDMA_Manager::connect_qp_Mside(ibv_qp* qp, std::string& q_id) {
   //  else{
   //    printf("connection built up!\n");
   //  }
-  fprintf(stdout, "QP %p state was change to RTS\n", qp);
+  //fprintf(stdout, "QP %p state was change to RTS\n", qp);
 /* sync to make sure that both sides are in states that they can connect to prevent packet loose */
 connect_qp_exit:
   return rc;
@@ -1588,10 +1588,10 @@ int RDMA_Manager::connect_qp(ibv_qp* qp, std::string& qp_type,
   l.unlock();
   if (rdma_config.gid_idx >= 0) {
     uint8_t* p = remote_con_data->gid;
-    fprintf(stdout,
-            "Remote GID =%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\n ",
-            p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9], p[10],
-            p[11], p[12], p[13], p[14], p[15]);
+//    fprintf(stdout,
+//            "Remote GID =%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\n ",
+//            p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9], p[10],
+//            p[11], p[12], p[13], p[14], p[15]);
   }
   /* modify the QP to init */
   rc = modify_qp_to_init(qp);
@@ -1615,7 +1615,7 @@ int RDMA_Manager::connect_qp(ibv_qp* qp, std::string& qp_type,
 //  else{
 //    printf("connection built up!\n");
 //  }
-  fprintf(stdout, "QP %p state was change to RTS\n", qp);
+  //fprintf(stdout, "QP %p state was change to RTS\n", qp);
 /* sync to make sure that both sides are in states that they can connect to prevent packet loose */
 connect_qp_exit:
   return rc;
@@ -1640,10 +1640,10 @@ int RDMA_Manager::connect_qp(ibv_qp* qp, registered_qp_config* remote_con_data) 
 
   if (rdma_config.gid_idx >= 0) {
     uint8_t* p = remote_con_data->gid;
-    fprintf(stdout,
-            "Remote GID =%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\n ",
-            p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9], p[10],
-            p[11], p[12], p[13], p[14], p[15]);
+//    fprintf(stdout,
+//            "Remote GID =%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\n ",
+//            p[0], p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9], p[10],
+//            p[11], p[12], p[13], p[14], p[15]);
   }
   /* modify the QP to init */
   rc = modify_qp_to_init(qp);
@@ -1664,7 +1664,7 @@ int RDMA_Manager::connect_qp(ibv_qp* qp, registered_qp_config* remote_con_data) 
     fprintf(stderr, "failed to modify QP state to RTS\n");
     goto connect_qp_exit;
   }
-  fprintf(stdout, "QP %p state was change to RTS\n", qp);
+  //fprintf(stdout, "QP %p state was change to RTS\n", qp);
   /* sync to make sure that both sides are in states that they can connect to prevent packet loose */
   connect_qp_exit:
   return rc;
@@ -1828,10 +1828,10 @@ int RDMA_Manager::sock_sync_data(int sock, int xfer_size, char* local_data,
             rc);
   else
     rc = 0;
-  printf("total bytes: %d", xfer_size);
+  //printf("total bytes: %d", xfer_size);
   while (!rc && total_read_bytes < xfer_size) {
     read_bytes = read(sock, remote_data, xfer_size);
-    printf("read byte: %d", read_bytes);
+    //printf("read byte: %d", read_bytes);
     if (read_bytes > 0)
       total_read_bytes += read_bytes;
     else
@@ -2785,7 +2785,7 @@ bool RDMA_Manager::Remote_Memory_Register(size_t size, uint8_t target_node_id) {
 //  asm volatile ("mfence\n" : : );
   //printf("Remote memory registeration, size: %zu\n", size);
   poll_reply_buffer(receive_pointer); // poll the receive for 2 entires
-  printf("polled reply buffer\n");
+  //printf("polled reply buffer\n");
   auto* temp_pointer = new ibv_mr();
   // Memory leak?, No, the ibv_mr pointer will be push to the remote mem pool,
   // Please remember to delete it when diregistering mem region from the remote memory
@@ -2835,10 +2835,10 @@ bool RDMA_Manager::Remote_Query_Pair_Connection(std::string& qp_type,
   send_pointer = (RDMA_Request*)send_mr.addr;
   send_pointer->command = create_qp_;
   send_pointer->content.qp_config.qp_num = qp->qp_num;
-  fprintf(stdout, "\nQP num to be sent = 0x%x\n", qp->qp_num);
+  //fprintf(stdout, "\nQP num to be sent = 0x%x\n", qp->qp_num);
   send_pointer->content.qp_config.lid = res->port_attr.lid;
   memcpy(send_pointer->content.qp_config.gid, &my_gid, 16);
-  fprintf(stdout, "Local LID = 0x%x\n", res->port_attr.lid);
+  //fprintf(stdout, "Local LID = 0x%x\n", res->port_attr.lid);
   send_pointer->buffer = receive_mr.addr;
   send_pointer->rkey = receive_mr.rkey;
   RDMA_Reply* receive_pointer;
@@ -2883,8 +2883,8 @@ bool RDMA_Manager::Remote_Query_Pair_Connection(std::string& qp_type,
   else
     res->qp_main_connection_info.insert({target_node_id,temp_buff});
   l1.unlock();
-  fprintf(stdout, "Remote QP number=0x%x\n", temp_buff->qp_num);
-  fprintf(stdout, "Remote LID = 0x%x\n", temp_buff->lid);
+  //fprintf(stdout, "Remote QP number=0x%x\n", temp_buff->qp_num);
+  //fprintf(stdout, "Remote LID = 0x%x\n", temp_buff->lid);
   // te,p_buff will have the informatin for the remote query pair,
   // use this information for qp connection.
   connect_qp(qp, qp_type, target_node_id);
@@ -2975,9 +2975,9 @@ void RDMA_Manager::Allocate_Local_RDMA_Slot(ibv_mr& mr_input,
       Local_Memory_Register(&buff, &mr,
   name_to_allocated_size.at(pool_name) == 0 ?
       1024*1024*1024:name_to_allocated_size.at(pool_name), pool_name);
-      if (node_id%2 == 1)
-        printf("Memory used up, Initially, allocate new one, memory pool is %s, total memory this pool is %lu\n",
-               EnumStrings[pool_name], name_to_mem_pool.at(pool_name).size());
+      //if (node_id%2 == 1)
+//        printf("Memory used up, Initially, allocate new one, memory pool is %s, total memory this pool is %lu\n",
+//               EnumStrings[pool_name], name_to_mem_pool.at(pool_name).size());
     }
     mem_write_lock.unlock();
     mem_read_lock.lock();
@@ -3016,11 +3016,11 @@ void RDMA_Manager::Allocate_Local_RDMA_Slot(ibv_mr& mr_input,
 
   Local_Memory_Register(&buff, &mr_to_allocate,name_to_allocated_size.at(pool_name) == 0 ?
       1024*1024*1024:name_to_allocated_size.at(pool_name), pool_name);
-  if (node_id%2 == 1)
-    printf("Memory used up, allocate new one, memory pool is %s, total memory is %lu\n",
-           EnumStrings[pool_name], Calculate_size_of_pool(DataChunk)+
-           Calculate_size_of_pool(IndexChunk)+Calculate_size_of_pool(FilterChunk)
-           + Calculate_size_of_pool(FlushBuffer)+ Calculate_size_of_pool(Version_edit));
+//  if (node_id%2 == 1)
+//    printf("Memory used up, allocate new one, memory pool is %s, total memory is %lu\n",
+//           EnumStrings[pool_name], Calculate_size_of_pool(DataChunk)+
+//           Calculate_size_of_pool(IndexChunk)+Calculate_size_of_pool(FilterChunk)
+//           + Calculate_size_of_pool(FlushBuffer)+ Calculate_size_of_pool(Version_edit));
   int block_index = name_to_mem_pool.at(pool_name)
                         .at(mr_to_allocate->addr)
                         ->allocate_memory_slot();
