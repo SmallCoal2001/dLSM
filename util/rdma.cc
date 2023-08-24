@@ -21,7 +21,7 @@ void UnrefHandle_qp(void* ptr) {
   if (ibv_destroy_qp(static_cast<ibv_qp*>(ptr))) {
     fprintf(stderr, "Thread local qp failed to destroy QP\n");
   } else {
-    printf("thread local qp destroy successfully!");
+    //printf("thread local qp destroy successfully!");
   }
 }
 void UnrefHandle_cq(void* ptr) {
@@ -29,7 +29,7 @@ void UnrefHandle_cq(void* ptr) {
   if (ibv_destroy_cq(static_cast<ibv_cq*>(ptr))) {
     fprintf(stderr, "Thread local cq failed to destroy QP\n");
   } else {
-    printf("thread local cq destroy successfully!");
+    //printf("thread local cq destroy successfully!");
   }
 }
 void Destroy_mr(void* ptr) {
@@ -1105,10 +1105,10 @@ int RDMA_Manager::resources_create() {
   }
   /* if there isn't any IB device in host */
   if (!num_devices) {
-    fprintf(stderr, "found %d device(s)\n", num_devices);
+    //fprintf(stderr, "found %d device(s)\n", num_devices);
     rc = 1;
   }
-  fprintf(stdout, "found %d device(s)\n", num_devices);
+  //fprintf(stdout, "found %d device(s)\n", num_devices);
   /* search for the specific device we want to work with */
   for (i = 0; i < num_devices; i++) {
     if (!rdma_config.dev_name) {
@@ -1292,7 +1292,7 @@ void RDMA_Manager::sync_with_computes_Cside() {
                  temp_receive);
   auto stop = std::chrono::high_resolution_clock::now();
   auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start);
-  printf("sync wait time is %ld", duration.count());
+  //printf("sync wait time is %ld", duration.count());
 }
 ibv_mr* RDMA_Manager::Get_local_read_mr() {
   ibv_mr* ret;

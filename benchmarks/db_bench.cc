@@ -636,6 +636,8 @@ class Benchmark {
         pre_keys.emplace_back(k);
       }
 
+      printf("keySize:%d, valueSize:%d\n",FLAGS_key_size,FLAGS_value_size);
+
       if (name == Slice("open")) {
         method = &Benchmark::OpenBench;
         num_ /= 10000;
@@ -1065,7 +1067,7 @@ class Benchmark {
         //        assert(false);
       }
     }
-    printf("validation read finished, not found num %d\n", not_found);
+    //printf("validation read finished, not found num %d\n", not_found);
   }
   void DoWrite(ThreadState* thread, bool seq) {
 //    if (num_ != FLAGS_num) {
