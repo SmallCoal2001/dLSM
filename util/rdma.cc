@@ -288,14 +288,14 @@ int RDMA_Manager::client_sock_connect(const char* servername, int port) {
           close(sockfd);
           sockfd = -1;
         }
-        printf("Success to connect to %s\n", servername);
+        //printf("Success to connect to %s\n", servername);
       } else {
         assert(false);
 
       }
     }
 
-    fprintf(stdout, "TCP connection was established\n");
+    //fprintf(stdout, "TCP connection was established\n");
   }
 sock_connect_exit:
   if (listenfd) close(listenfd);
@@ -597,7 +597,7 @@ void RDMA_Manager::compute_message_handling_thread(std::string q_id, uint8_t sha
     buffer_counter = 0;
     comm_thread_recv_mrs.insert({shard_target_node_id, recv_mr});
   }
-  printf("Start to sync options\n");
+  //printf("Start to sync options\n");
 //  sync_option_to_remote(shard_target_node_id);
   ibv_wc wc[3] = {};
   //    RDMA_Request receive_msg_buf;
@@ -606,7 +606,7 @@ void RDMA_Manager::compute_message_handling_thread(std::string q_id, uint8_t sha
     main_comm_thread_ready_num.fetch_add(1);
 //    write_stall_cv.notify_one();
 //  }
-  printf("client handling thread\n");
+  //printf("client handling thread\n");
   std::mutex* mtx_imme = mtx_imme_map.at(shard_target_node_id);
   std::atomic<uint32_t>* imm_gen = imm_gen_map.at(shard_target_node_id);
   uint32_t* imme_data = imme_data_map.at(shard_target_node_id);
@@ -1013,7 +1013,7 @@ void RDMA_Manager::Client_Set_Up_Resources() {
 //  std::cin >> ip_add;
 //  rdma_config.server_name = ip_add.c_str();
   /* if client side */
-  printf("Mark: valgrind socket info1\n");
+  //printf("Mark: valgrind socket info1\n");
   if (resources_create()) {
     fprintf(stderr, "failed to create resources\n");
     return;
@@ -1023,7 +1023,7 @@ void RDMA_Manager::Client_Set_Up_Resources() {
     uint8_t target_node_id =  2*i;
     res->sock_map[target_node_id] =
         client_sock_connect(memory_nodes[target_node_id].c_str(), rdma_config.tcp_port);
-    printf("connect to node id %d", target_node_id);
+    //printf("connect to node id %d", target_node_id);
     if (res->sock_map[target_node_id] < 0) {
       fprintf(stderr,
               "failed to establish TCP connection to server %s, port %d\n",
@@ -1096,7 +1096,7 @@ int RDMA_Manager::resources_create() {
   int rc = 0;
   //        ibv_device_attr *device_attr;
 
-  fprintf(stdout, "searching for IB devices in host\n");
+  //fprintf(stdout, "searching for IB devices in host\n");
   /* get device names in the system */
   dev_list = ibv_get_device_list(&num_devices);
   if (!dev_list) {
@@ -1113,8 +1113,8 @@ int RDMA_Manager::resources_create() {
   for (i = 0; i < num_devices; i++) {
     if (!rdma_config.dev_name) {
       rdma_config.dev_name = strdup(ibv_get_device_name(dev_list[i]));
-      fprintf(stdout, "device not specified, using first one found: %s\n",
-              rdma_config.dev_name);
+//      fprintf(stdout, "device not specified, using first one found: %s\n",
+//              rdma_config.dev_name);
     }
     if (!strcmp(ibv_get_device_name(dev_list[i]), rdma_config.dev_name)) {
       ib_dev = dev_list[i];
@@ -1183,17 +1183,17 @@ int RDMA_Manager::resources_create() {
   }
 
 
-  fprintf(stdout, "SST buffer, send&receive buffer were registered with a\n");
+  //fprintf(stdout, "SST buffer, send&receive buffer were registered with a\n");
   rc = ibv_query_device(res->ib_ctx, &(res->device_attr));
-  std::cout << "maximum outstanding wr number is"  << res->device_attr.max_qp_wr <<std::endl;
-  std::cout << "maximum query pair number is" << res->device_attr.max_qp
-            << std::endl;
-  std::cout << "maximum completion queue number is" << res->device_attr.max_cq
-            << std::endl;
-  std::cout << "maximum memory region number is" << res->device_attr.max_mr
-            << std::endl;
-  std::cout << "maximum memory region size is" << res->device_attr.max_mr_size
-            << std::endl;
+//  std::cout << "maximum outstanding wr number is"  << res->device_attr.max_qp_wr <<std::endl;
+//  std::cout << "maximum query pair number is" << res->device_attr.max_qp
+//            << std::endl;
+//  std::cout << "maximum completion queue number is" << res->device_attr.max_cq
+//            << std::endl;
+//  std::cout << "maximum memory region number is" << res->device_attr.max_mr
+//            << std::endl;
+//  std::cout << "maximum memory region size is" << res->device_attr.max_mr_size
+//            << std::endl;
 
   return rc;
 }

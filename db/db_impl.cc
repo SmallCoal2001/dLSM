@@ -183,7 +183,7 @@ DBImpl::DBImpl(const Options& raw_options, const std::string& dbname)
       flush_times(0)
 #endif
 {
-  printf("DBImpl start\n");
+  //printf("DBImpl start\n");
 
 //  for(auto iter : options_.ShardInfo){
 //    versions_pool.insert({iter.first,
@@ -220,7 +220,7 @@ DBImpl::DBImpl(const Options& raw_options, const std::string& dbname)
 //      main_comm_threads.back().detach();
 //    }
 
-    printf("communication thread created\n");
+    //printf("communication thread created\n");
     //Wait for the clearance of pending receive work request from the last DB open.
 //    {
 //      std::unique_lock<std::mutex> lck(superversion_memlist_mtx);
@@ -312,7 +312,7 @@ DBImpl::DBImpl(const Options& raw_options, const std::string& dbname,
 DBImpl::~DBImpl() {
   // Wait for background work to finish.
 //  undefine_mutex.Lock();
-  printf("DBImpl deallocated\n");
+  //printf("DBImpl deallocated\n");
   WaitforAllbgtasks(false);
   //TODO: recycle all the
 

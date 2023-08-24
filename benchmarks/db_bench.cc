@@ -450,21 +450,21 @@ class Benchmark {
   void PrintHeader() {
     const int kKeySize = 16 + FLAGS_key_prefix;
     PrintEnvironment();
-    std::fprintf(stdout, "Keys:       %d bytes each\n", kKeySize);
-    std::fprintf(
-        stdout, "Values:     %d bytes each (%d bytes after compression)\n",
-        FLAGS_value_size,
-        static_cast<int>(FLAGS_value_size * FLAGS_compression_ratio + 0.5));
-    std::fprintf(stdout, "Entries:    %d\n", num_);
-    std::fprintf(stdout, "RawSize:    %.1f MB (estimated)\n",
-                 ((static_cast<int64_t>(kKeySize + FLAGS_value_size) * num_) /
-                  1048576.0));
-    std::fprintf(
-        stdout, "FileSize:   %.1f MB (estimated)\n",
-        (((kKeySize + FLAGS_value_size * FLAGS_compression_ratio) * num_) /
-         1048576.0));
+    //std::fprintf(stdout, "Keys:       %d bytes each\n", kKeySize);
+//    std::fprintf(
+//        stdout, "Values:     %d bytes each (%d bytes after compression)\n",
+//        FLAGS_value_size,
+//        static_cast<int>(FLAGS_value_size * FLAGS_compression_ratio + 0.5));
+//    std::fprintf(stdout, "Entries:    %d\n", num_);
+//    std::fprintf(stdout, "RawSize:    %.1f MB (estimated)\n",
+//                 ((static_cast<int64_t>(kKeySize + FLAGS_value_size) * num_) /
+//                  1048576.0));
+//    std::fprintf(
+//        stdout, "FileSize:   %.1f MB (estimated)\n",
+//        (((kKeySize + FLAGS_value_size * FLAGS_compression_ratio) * num_) /
+//         1048576.0));
     PrintWarnings();
-    std::fprintf(stdout, "------------------------------------------------\n");
+    //std::fprintf(stdout, "------------------------------------------------\n");
   }
 
   void PrintWarnings() {
@@ -483,9 +483,9 @@ class Benchmark {
     const char text[] = "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy";
     std::string compressed;
     if (!port::Snappy_Compress(text, sizeof(text), &compressed)) {
-      std::fprintf(stdout, "WARNING: Snappy compression is not enabled\n");
+      //std::fprintf(stdout, "WARNING: Snappy compression is not enabled\n");
     } else if (compressed.size() >= sizeof(text)) {
-      std::fprintf(stdout, "WARNING: Snappy compression is not effective\n");
+      //std::fprintf(stdout, "WARNING: Snappy compression is not effective\n");
     }
   }
 
@@ -1043,7 +1043,7 @@ class Benchmark {
       s = db_->Put(write_options_, key, key);
       validation_keys.push_back(key.ToString());
     }
-    printf("validation write finished\n");
+    //printf("validation write finished\n");
   }
   void Validation_Read() {
     ReadOptions options;
@@ -1068,11 +1068,11 @@ class Benchmark {
     printf("validation read finished, not found num %d\n", not_found);
   }
   void DoWrite(ThreadState* thread, bool seq) {
-    if (num_ != FLAGS_num) {
-      char msg[100];
-      std::snprintf(msg, sizeof(msg), "\ntid:%d, (%d ops)", thread->tid, num_);
-      thread->stats.AddMessage(msg);
-    }
+//    if (num_ != FLAGS_num) {
+//      char msg[100];
+//      std::snprintf(msg, sizeof(msg), "\ntid:%d, (%d ops)", thread->tid, num_);
+//      thread->stats.AddMessage(msg);
+//    }
 
     RandomGenerator gen;
     WriteBatch batch;
@@ -1205,10 +1205,10 @@ class Benchmark {
       }
       thread->stats.FinishedSingleOp();
     }
-    char msg[100];
-    std::snprintf(msg, sizeof(msg), "\ntid:%d, (%d of %d found)", thread->tid,
-                  found, reads_);
-    thread->stats.AddMessage(msg);
+//    char msg[100];
+//    std::snprintf(msg, sizeof(msg), "\ntid:%d, (%d of %d found)", thread->tid,
+//                  found, reads_);
+//    thread->stats.AddMessage(msg);
   }
   void ReadRandom_Sharded(ThreadState* thread) {
     ReadOptions options;
@@ -1312,13 +1312,13 @@ class Benchmark {
         //        thread->stats.FinishedOps(nullptr, db, 1, kWrite);
       }
     }
-    char msg[100];
-    snprintf(msg, sizeof(msg),
-             "\ntid:%d, ( reads:%" PRIu64 " writes:%" PRIu64 " found:%" PRIu64
-             ")",
-             thread->tid, reads_done, writes_done, found);
+//    char msg[100];
+//    snprintf(msg, sizeof(msg),
+//             "\ntid:%d, ( reads:%" PRIu64 " writes:%" PRIu64 " found:%" PRIu64
+//             ")",
+//             thread->tid, reads_done, writes_done, found);
     //    printf("Read average latency is %lu\n", time_elapse/reads_done);
-    thread->stats.AddMessage(msg);
+    //thread->stats.AddMessage(msg);
   }
   void ReadMissing(ThreadState* thread) {
     ReadOptions options;
