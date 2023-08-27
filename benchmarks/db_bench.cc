@@ -27,6 +27,8 @@
 #include "util/random.h"
 #include "util/testutil.h"
 
+static int memSize = 72818;
+
 // Comma-separated list of operations to run in the specified order
 //   Actual benchmarks:
 //      fillseq       -- write N values in sequential key order in async mode
@@ -140,6 +142,7 @@ static const char* FLAGS_db = nullptr;
 static int FLAGS_readwritepercent = 90;
 static int FLAGS_ops_between_duration_checks = 2000;
 static int FLAGS_duration = 0;
+
 namespace dLSM {
 
 namespace {
@@ -636,7 +639,7 @@ class Benchmark {
         pre_keys.emplace_back(k);
       }
 
-      printf("keySize:%d, valueSize:%d\n",FLAGS_key_size,FLAGS_value_size);
+      printf("keySize:%d, valueSize:%d, memTable:%dMB\n",FLAGS_key_size,FLAGS_value_size,memSize*16*(FLAGS_key_size+FLAGS_value_size+50)/1024/1024);
 
       if (name == Slice("open")) {
         method = &Benchmark::OpenBench;
