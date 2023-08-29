@@ -1,0 +1,1 @@
+/usr/bin/c++   -fno-exceptions -fno-rtti -DROCKSDB_SUPPORT_THREAD_LOCAL -Wall -Wextra  -O3 -DNDEBUG  -rdynamic CMakeFiles/Server.dir/server.cc.o  -o Server  libdLSM.a -lsnappy -pthread /usr/lib/x86_64-linux-gnu/libibverbs.so 

@@ -311,6 +311,7 @@ sock_connect_exit:
   return sockfd;
 }
 
+
 //void RDMA_Manager::server_communication_thread(std::string client_ip,
 //                                               int socket_fd) {
 //  printf("A new shared memory thread start\n");

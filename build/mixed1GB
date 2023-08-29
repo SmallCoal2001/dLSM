@@ -1,0 +1,126 @@
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:10%
+fillrandom   :       2.665 micros/op;    5772.431 KOPS;  270.6 MB/s
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:10%
+readrandom   :      74.960 micros/op;     207.944 KOPS;
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:10%
+readrandomwriterandom :       4.977 micros/op;    2940.940 KOPS;
+keySize:16, valueSize:32, memTable:1023MB
+
+                               Compactions
+Level  Files Size(MB) Time(sec) Read(MB) Write(MB)
+--------------------------------------------------
+  0        5      192         9        0       519
+  1        4      242         0        0         0
+  2        1       64         0        0         0
+
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:30%
+fillrandom   :       2.776 micros/op;    5260.404 KOPS;  246.6 MB/s
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:30%
+readrandom   :      82.829 micros/op;     187.287 KOPS;
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:30%
+readrandomwriterandom :       9.589 micros/op;    1574.461 KOPS;
+keySize:16, valueSize:32, memTable:1023MB
+
+                               Compactions
+Level  Files Size(MB) Time(sec) Read(MB) Write(MB)
+--------------------------------------------------
+  0        4      154         9        0       481
+  1        4      242         0        0         0
+  2        1       64         0        0         0
+
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:50%
+fillrandom   :       3.984 micros/op;    3716.379 KOPS;  174.2 MB/s
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:50%
+readrandom   :      76.724 micros/op;     202.806 KOPS;
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:50%
+readrandomwriterandom :      10.832 micros/op;    1374.689 KOPS;
+keySize:16, valueSize:32, memTable:1023MB
+
+                               Compactions
+Level  Files Size(MB) Time(sec) Read(MB) Write(MB)
+--------------------------------------------------
+  0        0        0         9        0       404
+  1        4      192         0        0         0
+  2        2      128         0        0         0
+
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:70%
+fillrandom   :       2.809 micros/op;    5390.745 KOPS;  252.7 MB/s
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:70%
+readrandom   :      77.947 micros/op;     199.722 KOPS;
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:70%
+readrandomwriterandom :      14.449 micros/op;    1072.109 KOPS;
+keySize:16, valueSize:32, memTable:1023MB
+
+                               Compactions
+Level  Files Size(MB) Time(sec) Read(MB) Write(MB)
+--------------------------------------------------
+  0        1       38         8        0       365
+  1        4      242         0        0         0
+  2        1       64         0        0         0
+
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:90%
+fillrandom   :       2.693 micros/op;    5581.288 KOPS;  261.6 MB/s
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:90%
+readrandom   :      82.321 micros/op;     188.226 KOPS;
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:90%
+readrandomwriterandom :      17.617 micros/op;     878.228 KOPS;
+keySize:16, valueSize:32, memTable:1023MB
+
+                               Compactions
+Level  Files Size(MB) Time(sec) Read(MB) Write(MB)
+--------------------------------------------------
+  0        1       39         8        0       327
+  1        5      224         0        0         0
+  2        1       64         0        0         0
+
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:30%
+fillrandom   :       2.633 micros/op;    5708.161 KOPS;  267.6 MB/s
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:30%
+readrandom   :      80.165 micros/op;     193.512 KOPS;
+keySize:16, valueSize:32, memTable:1023MB
+
+total done:5000000, 16 threads, readwritepercent:30%
+readrandomwriterandom :       8.345 micros/op;    1853.306 KOPS;
+keySize:16, valueSize:32, memTable:1023MB
+
+                               Compactions
+Level  Files Size(MB) Time(sec) Read(MB) Write(MB)
+--------------------------------------------------
+  0        1       38         9        0       481
+  1        4      198         0        0         0
+  2        2      128         0        0         0
+

@@ -27,7 +27,7 @@
 #include "util/random.h"
 #include "util/testutil.h"
 
-static int memSize = 72818;
+static int memSize = 66873;
 
 // Comma-separated list of operations to run in the specified order
 //   Actual benchmarks:
@@ -632,10 +632,9 @@ class Benchmark {
       void (Benchmark::*method)(ThreadState*) = nullptr;
       bool fresh_db = false;
       int num_threads = FLAGS_threads;
-
       srand(time(0));
       for (int i = 0; i < FLAGS_num; i++) {
-        const int k = rand();
+        const int k = rand()%(number_of_key_per_compute);
         pre_keys.emplace_back(k);
       }
 
@@ -1113,11 +1112,11 @@ class Benchmark {
     thread->stats.AddBytes(bytes);
   }
   void DoWrite_Sharded(ThreadState* thread, bool seq) {
-    if (num_ != FLAGS_num) {
-      char msg[100];
-      std::snprintf(msg, sizeof(msg), "(%d ops)", num_);
-      thread->stats.AddMessage(msg);
-    }
+//    if (num_ != FLAGS_num) {
+//      char msg[100];
+//      std::snprintf(msg, sizeof(msg), "(%d ops)", num_);
+//      thread->stats.AddMessage(msg);
+//    }
 
     RandomGenerator gen;
     WriteBatch batch;
@@ -1134,9 +1133,10 @@ class Benchmark {
         // The key range should be adjustable.
         //         const int k = seq ? i + j :
         //         thread->rand.Uniform(FLAGS_num*FLAGS_threads);
-        const int k =
-            seq ? i + j : thread->rand.Next() % (number_of_key_per_compute);
-
+//        const int k =
+//            seq ? i + j : thread->rand.Next() % (number_of_key_per_compute);
+        const int k = seq ? i + j + num_ * thread->tid
+                          : pre_keys[i + j + num_ * thread->tid];
         //        key.Set(k);
         GenerateKeyFromInt(
             k + shard_number_among_computes * number_of_key_per_compute, &key);
@@ -1228,7 +1228,9 @@ class Benchmark {
     for (int i = 0; i < reads_; i++) {
       //      const int k = thread->rand.Uniform(FLAGS_num*FLAGS_threads);//
       //      make it uniform as write.
-      const int k = thread->rand.Next() % (number_of_key_per_compute);
+      //const int k = thread->rand.Next() % (number_of_key_per_compute);
+      srand(time(0));
+      const int k = pre_keys[rand() % FLAGS_num];
       //
       //            key.Set(k);
       GenerateKeyFromInt(

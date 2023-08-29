@@ -1,0 +1,1 @@
+/usr/bin/c++   -fno-exceptions -fno-rtti -DROCKSDB_SUPPORT_THREAD_LOCAL -Wall -Wextra  -O3 -DNDEBUG  -rdynamic CMakeFiles/Mem_leak_checker.dir/memory_leak.cpp.o  -o Mem_leak_checker  libdLSM.a -lsnappy -pthread /usr/lib/x86_64-linux-gnu/libibverbs.so 

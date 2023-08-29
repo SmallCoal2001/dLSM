@@ -1445,7 +1445,7 @@ Status Memory_Node_Keeper::InstallCompactionResultsToComputePreparation(
         rdma_mg->post_receive<RDMA_Request>(&recv_mr[buffer_position],
                                             compute_node_id,
                                             client_ip);
-
+        printf("create_mr\n");
         create_mr_handler(receive_msg_buf, client_ip, compute_node_id);
 //        rdma_mg_->post_send<ibv_mr>(send_mr,client_ip);  // note here should be the mr point to the send buffer.
 //        rdma_mg_->poll_completion(wc, 1, client_ip, true);

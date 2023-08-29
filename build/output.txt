@@ -1,0 +1,11 @@
+keySize:16, valueSize:32, memTable:99MB
+
+total done:10000000, 4 threads, readwritepercent:10%
+fillrandomshard :       2.244 micros/op;    1692.720 KOPS;   79.3 MB/s
+keySize:16, valueSize:32, memTable:99MB
+
+total done:10000000, 4 threads, readwritepercent:10%
+readrandomshard :      12.956 micros/op;     299.444 KOPS; (2500000 of 2500000 found)(2500000 of 2500000 found)(2500000 of 2500000 found)(2500000 of 2500000 found)
+2
+keySize:16, valueSize:32, memTable:99MB
+2
